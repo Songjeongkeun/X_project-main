@@ -2,7 +2,7 @@ import { useState } from "react"
 import styles from "./login.module.css"
 import { useNavigate, Link } from "react-router-dom"
 
-const API_URL = "http://127.0.0.1:5000/auth/login"
+const API_URL = "http://127.0.0.1:5000/auth/signup"
 
 export default function Signup() {
     const [error, setError] = useState("")
@@ -10,4 +10,48 @@ export default function Signup() {
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
     const [nickname, setNickname] = useState("")
+
+    const navigate = useNavigate()
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                userid,
+                password,
+                nickname,
+                email
+            })
+        })
+        
+
+        const data = await response.json()
+
+        if (!response.ok) {
+            throw new Error("회원가입을 실패했습니다.")
+        }
+        navigate("/auth/login")
+        return data
+        }
+    
+
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <input className={styles.input} type="text" placeholder="닉네임을 입력해주세요" value={nickname} onChange={(e) => setNickname(e.target.value)} />
+            <input className={styles.input} type="text" placeholder="아이디를 입력해주세요" value={userid} onChange={(e) => setUserid(e.target.value)} />
+            <input className={styles.input} type="password" placeholder="비밀번호를 입력해주세요" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <input className={styles.input} type="password" placeholder="이메일을 입력해주세요" value={email} onChange={(e) => setEmail(e.target.value)} />
+
+
+            {error && <p>{error}</p>}
+            <button className={styles.button}>회원가입</button>
+            <Link to="/auth/signup">로그인</Link>
+        </form>
+    )
 }
