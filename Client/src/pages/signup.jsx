@@ -35,6 +35,7 @@ export default function Signup() {
         if (!response.ok) {
             throw new Error("회원가입을 실패했습니다.")
         }
+        alert("회원가입이 완료되었습니다.")
         navigate("/auth/login")
         return data
         }
@@ -46,12 +47,12 @@ export default function Signup() {
             <input className={styles.input} type="text" placeholder="닉네임을 입력해주세요" value={nickname} onChange={(e) => setNickname(e.target.value)} />
             <input className={styles.input} type="text" placeholder="아이디를 입력해주세요" value={userid} onChange={(e) => setUserid(e.target.value)} />
             <input className={styles.input} type="password" placeholder="비밀번호를 입력해주세요" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <input className={styles.input} type="password" placeholder="이메일을 입력해주세요" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input className={styles.input} type="text" placeholder="이메일을 입력해주세요" value={email} onChange={(e) => setEmail(e.target.value)} />
 
 
             {error && <p>{error}</p>}
             <button className={styles.button}>회원가입</button>
-            <Link to="/auth/signup">로그인</Link>
+            <Link to="/auth/login">로그인</Link>
         </form>
     )
 }
